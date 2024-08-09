@@ -19,24 +19,33 @@ void random_fill(IntArray* arr, int min, int max) {
   }
 }
 
+bool is_even(int number) {
+  return number % 2 == 0 ? true : false;
+}
+
 int main(int argc, char* argv[]) {
 
   IntArray* arr = new_int_array(10);
-
-  random_fill(arr, 1, 32);
-  // arr->fill(arr, 10);
+  random_fill(arr, 1, 128);
 
   arr->for_each(arr, &print_int);
   putchar('\n');
 
-  arr->at(arr, 5);
-
   IntArray* mapped_array = arr->map(arr, &double_number);
-  
   mapped_array->for_each(mapped_array, &print_int);
   putchar('\n');
 
+  IntArray* filtered_array = arr->filter(arr, &is_even);
+  filtered_array->for_each(filtered_array, &print_int);
+  putchar('\n');
+
+  char* joined_array = arr->join(arr, "..");
+  printf("%s\n", joined_array);
+
   arr->destroy(arr);
+  mapped_array->destroy(mapped_array);
+  filtered_array->destroy(filtered_array);
+  free(joined_array);
 
   return 0;
 }
