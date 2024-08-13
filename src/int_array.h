@@ -3,20 +3,22 @@
 
 #include <stdbool.h>
 
-typedef struct IntArray IntArray;
-
-struct IntArray {
+typedef struct IntArray {
   int* array;
   int length;
-  void (*for_each)(IntArray*, void (*)(int));
-  IntArray* (*map)(IntArray*, int (*)(int));
-  IntArray* (*filter)(IntArray*, bool (*)(int));
-  char* (*join)(IntArray*, const char*);
-  void (*fill)(IntArray*, int);
-  int (*at)(IntArray*, int);
-  void (*destroy)(IntArray*);
-};
+  int max_length;
+  void (*for_each)(struct IntArray*, void (*)(int));
+  struct IntArray* (*map)(struct IntArray*, int (*)(int));
+  struct IntArray* (*filter)(struct IntArray*, bool (*)(int));
+  char* (*join)(struct IntArray*, const char*);
+  void (*fill)(struct IntArray*, int);
+  int (*at)(struct IntArray*, int);
+  void (*destroy)(struct IntArray*);
 
-IntArray* new_int_array(int);
+  int (*push)(struct IntArray*, int);
+  int (*pop)(struct IntArray*);
+} IntArray;
+
+struct IntArray* new_int_array(int);
 
 #endif

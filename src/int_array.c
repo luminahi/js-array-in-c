@@ -81,11 +81,30 @@ void destroy(IntArray* self) {
   free(self);
 }
 
+int push(IntArray* self, int value) {
+  if (self->length >= self->max_length) {
+    int new_max_length = self->max_length * 1.5 + 1;
+    self->array = (int*) realloc(self->array, sizeof(int) * new_max_length);
+    self->max_length = new_max_length;
+  }
+
+  self->array[self->length] = value;
+  self->length++;
+  return self->length;
+}
+
+int pop(IntArray* self) {
+
+  return 0;
+}
+
 IntArray* new_int_array(int size) {
   IntArray* arr = (IntArray*) malloc(sizeof(IntArray));
+  int max_size = size < 8 ? 8 : size;
 
-  arr->array = (int*) malloc(sizeof(int) * size); 
+  arr->array = (int*) malloc(sizeof(int) * max_size);
   arr->length = size;
+  arr->max_length = max_size;
   arr->for_each = &for_each;
   arr->map = &map;
   arr->filter = &filter;
@@ -93,6 +112,8 @@ IntArray* new_int_array(int size) {
   arr->fill = &fill;
   arr->at = &at;
   arr->destroy = &destroy;
+  arr->push = &push;
+  arr->pop = &pop;
 
   return arr;
 }
