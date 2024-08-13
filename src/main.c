@@ -11,41 +11,23 @@ int double_number(int number) {
   return number * 2;
 } 
 
-void random_fill(IntArray* arr, int min, int max) {
-  srand(time(NULL));
-  
-  for (int i = 0; i < arr->length; i++) {
-    arr->array[i] = (rand() % (max - min)) + min;
-  }
-}
-
 bool is_even(int number) {
   return number % 2 == 0 ? true : false;
 }
 
 int main(int argc, char* argv[]) {
 
-  IntArray* arr = new_int_array(10);
-  random_fill(arr, 1, 128);
+  IntArray* arr = new_int_array(0);
+
+  for (int i = 0; i < 500; i++) arr->push(arr, i);
+  for (int i = 0; i < 500; i++) arr->pop(arr);
+
+  printf("Current Size: %d\n", arr->length);
+  printf("Max Size: %d\n", arr->max_length);
 
   arr->for_each(arr, &print_int);
-  putchar('\n');
-
-  IntArray* mapped_array = arr->map(arr, &double_number);
-  mapped_array->for_each(mapped_array, &print_int);
-  putchar('\n');
-
-  IntArray* filtered_array = arr->filter(arr, &is_even);
-  filtered_array->for_each(filtered_array, &print_int);
-  putchar('\n');
-
-  char* joined_array = arr->join(arr, "..");
-  printf("%s\n", joined_array);
 
   arr->destroy(arr);
-  mapped_array->destroy(mapped_array);
-  filtered_array->destroy(filtered_array);
-  free(joined_array);
 
   return 0;
 }

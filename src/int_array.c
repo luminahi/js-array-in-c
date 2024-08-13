@@ -64,6 +64,7 @@ char* join(IntArray* self, const char* separator) {
   }
   
   string[string_length - separator_length] = '\0';
+
   return string;
 }
 
@@ -90,12 +91,17 @@ int push(IntArray* self, int value) {
 
   self->array[self->length] = value;
   self->length++;
+
   return self->length;
 }
 
 int pop(IntArray* self) {
+  if (self->length <= 0) return 0;
+  self->length--;
+  int aux = self->array[self->length];
+  self->array[self->length] = 0;
 
-  return 0;
+  return aux;
 }
 
 IntArray* new_int_array(int size) {
