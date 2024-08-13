@@ -14,7 +14,6 @@ typedef struct IntArray {
   void (*fill)(struct IntArray*, int);
   int (*at)(struct IntArray*, int);
   void (*destroy)(struct IntArray*);
-
   int (*push)(struct IntArray*, int);
   int (*pop)(struct IntArray*);
 } IntArray;
